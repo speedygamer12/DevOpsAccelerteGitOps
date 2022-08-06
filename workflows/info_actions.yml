@@ -1,0 +1,17 @@
+name: 'Prints details of Ubuntu image'
+on:
+  schedule:
+    - cron: '0 0 * * *'
+jobs:
+  print_details:
+    runs-on: ubuntu-latest
+    
+    steps:        
+      - name: Prints OS name 
+        run: cat /etc/*-release
+
+      - name: List all files in the directory
+        run: ls ${{github.workspace}}
+      
+      - name: print Usename of container
+        run: echo $whoami
