@@ -1,19 +1,22 @@
-name: 'Prints details of Ubuntu image'
+name: Close inactive issues
 on:
   schedule:
-    - cron: '0 0 * * *'
-jobs:
-  print_details:
-    runs-on: ubuntu-latest
-    
-    steps:        
-      - uses: actions/checkout@v3
-      
-      - name: Prints OS name 
-        run: cat /etc/*-release
+    - cron: "26 8 * * *"
 
-      - name: List all files in the directory
-        run: ls ${{github.workspace}}
-      
-      - name: print usename of container
-        run: echo $whoami
+jobs:
+  close-issues:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
+    steps:
+      - uses: actions/stale@v5
+        with:
+          days-before-issue-stale: 1
+          days-before-issue-close: 2
+          stale-issue-label: "stale"
+          stale-issue-message: "This issue is stale because it has been open for 30 days with no activity."
+          close-issue-message: "This issue was closed because it has been inactive for 14 days since being marked as stale."
+          days-before-pr-stale: -1
+          days-before-pr-close: -1
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
