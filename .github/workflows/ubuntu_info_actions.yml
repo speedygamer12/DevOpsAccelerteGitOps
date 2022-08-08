@@ -7,11 +7,13 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:        
+      - uses: actions/checkout@v3
+      
       - name: Prints OS name 
         run: cat /etc/*-release
 
       - name: List all files in the directory
         run: ls ${{github.workspace}}
       
-      - name: print Usename of container
+      - name: print usename of container
         run: echo $whoami
